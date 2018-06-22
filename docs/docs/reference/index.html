@@ -22,13 +22,30 @@
 <h2 id="on-[event]">on-[event]</h2><p>Binds an event listener on the element using the event specified in <code>[event]</code> and the bound object (should return a function) as the callback.</p>
 <p><em>If the end value of the binding changes to a different function, this binder will automatically unbind the old callback and bind a new listener to the new function.</em></p>
 <pre><code class="language-html">&lt;button rv-on-click=&quot;item.destroy&quot;&gt;Remove&lt;/button&gt;</code></pre>
-<h2 id="each-[item]">each-[item]</h2><p>Appends a new instance of the element in place for each item in an array. Each element is bound with a completely new nested view that contains an additional property (named whatever value is in place of <code>[item]</code>) which points to the current iterated item in the array.</p>
+<h2 id="each-[item]">each-[item]</h2><p>Appends a new instance of the element in place for each item in an array. Each element is bound to a new view created in a scope with three special properties:</p>
+<ul>
+<li>the current iterated item in the array, named whatever value is in place of <code>[item]</code></li>
+<li><code>$index</code>: the current iterated item index. Can be configured by setting <code>index-property</code> attribute</li>
+<li><code>$parent</code>: the parent scope, if any</li>
+</ul>
 <p><em>Also note that you may bind to the iterated item directly on the parent element which contains the actual <code>rv-each</code> declaration.</em></p>
 <pre><code class="language-html">&lt;ul&gt;
-  &lt;li rv-each-todo=&quot;todos&quot;&gt;
-    &lt;input type=&quot;checkbox&quot; rv-checked=&quot;todo.done&quot;&gt; { todo.name }
+  &lt;li rv-each-todo=&quot;todos&quot; rv-data-id=&quot;todo.id&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; rv-checked=&quot;todo.done&quot;&gt; { $index } - { todo.name }
   &lt;/li&gt;
 &lt;ul&gt;</code></pre>
+<h3>Nested <code>rv-each</code></h3><p>By nesting elements bound by <code>rv-each</code>, a scope is created for each nest level. The variables from parent scopes can be acessed by child ones, using a resolution algorithm similar to JavaScript prototype chain, i.e., looks for current scope if not found, look in parent scope repeating until find.</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li rv-each-categories=&quot;categories&quot;&gt;
+    { category.name }
+    &lt;ul&gt;
+      &lt;li rv-each-todo=&quot;category.todos&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; rv-checked=&quot;todo.done&quot; rv-data-category-id=&quot;category.id&quot;&gt; { $index } - { todo.name }
+      &lt;/li&gt;
+    &lt;ul&gt;
+  &lt;/li&gt;
+&lt;ul&gt;</code></pre>
+<p>A more complex example can be found <a href="https://codepen.io/blikblum/pen/MKXXOX?editors=1010#0">here</a></p>
 <h2 id="class-[classname]">class-[classname]</h2><p>Adds a class (whatever value is in place of <code>[classname]</code>) on the element when the value evaluates to true and removes that class if the value evaluates to false.</p>
 <pre><code class="language-html">&lt;li rv-class-completed=&quot;todo.done&quot;&gt;{ todo.name }&lt;/li&gt;</code></pre>
 <h2 id="[attribute]">[attribute]</h2><p>Sets the value of an attribute (whatever value is in place of <code>[attribute]</code>) on the element.</p>

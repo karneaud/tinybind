@@ -54,6 +54,8 @@ Documentation is available on the [homepage](http://blikblum.github.io/tinybind/
   * Written in ES6 instead of coffeescript
   * Change how scope of iteration binder works. Instead of copying properties down to children, uses a prototype like approach
     * Related: [486](https://github.com/mikeric/rivets/issues/486) [512](https://github.com/mikeric/rivets/issues/512) [417](https://github.com/mikeric/rivets/pull/417)
+    * More info in the [documentation](https://blikblum.github.io/tinybind/docs/reference/#each-[item])
+  * Change name of rv-each index property from index to $index
   * Change how to customize index name in each binder (using an attribute)
     * Related: [551](https://github.com/mikeric/rivets/issues/551) [552](https://github.com/mikeric/rivets/pull/552)
   * Do not bind publish, bind and unbind methods to binding instances
@@ -88,6 +90,16 @@ tinybind.js uses [mocha](http://visionmedia.github.io/mocha/) as it's testing fr
 ```
 $ npm test
 ```
+
+#### Building documentation
+
+The documentation is built with [harp](http://harpjs.com/) which must be installed globally
+
+```
+$ cd docs
+$ harp compile _harp ./
+```
+
 
 ## Contributing
 
