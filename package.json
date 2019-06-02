@@ -21,8 +21,7 @@
   "scripts": {
     "pretest": "node tools/build.js --development",
     "test": "phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js spec/runner.html",
-    "build": "node tools/build",
-    "dev": "webpack --watch --env.dev"
+    "build": "node tools/build"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
