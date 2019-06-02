@@ -31,16 +31,14 @@ function getOutputOptions(format, filename = 'tinybind.js') {
 const plugins = [babel({
   presets: [
     [
-      'env', 
+      '@babel/preset-env', 
       {
         loose: true, 
         modules: false,
-        targets: {browsers: ['ie 11']},
-        exclude: ['babel-plugin-transform-es2015-typeof-symbol']
+        targets: {browsers: ['ie 11']}
       }
     ]
-  ],
-  plugins: ['external-helpers']
+  ]
 })]
 
 // Compile source code into a distributable format with Babel
