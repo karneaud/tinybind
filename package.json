@@ -2,10 +2,7 @@
   "name": "tinybind",
   "description": "Declarative data binding + templating solution.",
   "version": "0.11.0",
-  "author": "Michael Richards",
-  "contributors": [
-    "Luiz Américo Pereira Câmara"
-  ],
+  "author": "Luiz Américo Pereira Câmara",  
   "url": "https://github.com/blikblum/tinybind",
   "main": "./dist/tinybind.js",
   "licenses": [

@@ -114,3 +114,7 @@ $ harp compile _harp ./
 3. Make sure not to commit any changes under `dist/` as they will surely cause conflicts for others later. Files under `dist/` are only committed when a new build is released.
 4. Include tests that cover any changes or additions that you've made.
 5. Push your topic branch to your fork and submit a pull request. Include details about the changes as well as a reference to related issue(s).
+
+---
+Copyright (c) 2019 Luiz Américo Pereira Câmara <br>
+Copyright (c) 2011 Michael Richards
