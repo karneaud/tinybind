@@ -5,6 +5,7 @@ describe('tinybind.Binding', function() {
     originalPrefix = tinybind.prefix;
     tinybind.prefix = 'data';
     adapter = tinybind.adapters['.'];
+    sinon.spy(adapter, 'set');
 
     el = document.createElement('div');
     el.setAttribute('data-text', 'obj.name');
@@ -15,6 +16,7 @@ describe('tinybind.Binding', function() {
   });
 
   afterEach(function() {
+    adapter.set.restore();
     tinybind.prefix = originalPrefix
   });
 
@@ -211,22 +213,52 @@ describe('tinybind.Binding', function() {
   });
   
   describe('publish()', function() {
-    var numberInput;
     it("should publish the value of a number input", function() {
+      var numberInput;
       numberInput = document.createElement('input');
       numberInput.setAttribute('type', 'number');
       numberInput.setAttribute('data-value', 'obj.num');
 
-      view = tinybind.bind(numberInput, {obj: {num: 42}});
+      view = tinybind.bind(numberInput, {obj: {num: 10}});
       binding = view.bindings[0];
       model = binding.model;
 
       numberInput.value = 42;
 
-      sinon.spy(adapter, 'set');
       binding.publish({target: numberInput});
       adapter.set.calledWith(model, 'num', '42').should.be.true
     })
+
+    var createOptionEls = function(val) {
+      var option = document.createElement('option');
+      option.value = val;
+      option.textContent = val + ' text';
+      return option
+    };
+
+    it("should publish the value of a select-multiple input", function() {
+      var selectInput = document.createElement('select');
+      selectInput.multiple = true; 
+      var options = ['a', 'b', 'c'].map(createOptionEls);
+      options.forEach(function(option) {
+        selectInput.appendChild(option)
+      });      
+      selectInput.setAttribute('data-value', 'obj.items');
+
+      view = tinybind.bind(selectInput, {obj: {items: [1, 2]}});
+      binding = view.bindings[0];
+      model = binding.model;
+
+      options[0].selected = true;
+      options[2].selected = true;
+      
+      binding.publish({target: selectInput});      
+      adapter.set.calledWith(model, 'items').should.be.true;
+      var valueArgument = adapter.set.getCall(0).args[2];
+      valueArgument.length.should.equal(2);
+      valueArgument[0].should.equal('a');
+      valueArgument[1].should.equal('c');      
+    });
   });
 
   describe('publishTwoWay()', function() {

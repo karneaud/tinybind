@@ -1,18 +1,18 @@
 import {parseType} from './parsers'
 import Observer from './observer'
 
-function getInputValue(el) {
-  let results = []
+function getInputValue(el) {  
   if (el.type === 'checkbox') {
     return el.checked
   } else if (el.type === 'select-multiple') {
-
-    el.options.forEach(option => {
+    const results = []
+    let option
+    for (let i = 0; i < el.options.length; i++) {
+      option = el.options[i]
       if (option.selected) {
-        results.push(option.value)
+        results.push(option.value);
       }
-    })
-
+    }
     return results
   } else {
     return el.value
