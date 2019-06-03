@@ -104,6 +104,37 @@
 <pre><code class="language-javascript">tinybind.formatters.time = function(value, timezone, format) {
   return moment(value).tz(timezone).format(format)
 }</code></pre>
+<h3 id="formatters-builtins">Builtins formatters</h3><p>The following formatters are provided by default:</p>
+<h4>not (alias: negate)</h4><p>Returns <code>false</code> to truthy values and <code>true</code> for falsy values</p>
+<h4>watch</h4><p>Returns the value as is. Can be used to track changes on one or more dependent properties that must be passed as arguments</p>
+<pre><code class="language-html">&lt;span rv-text=&quot;dateRange | someFormatter | watch start end&quot;&gt;&lt;/span&gt;</code></pre>
+<p>In the example above the binding value will be updated when start or end properties changes</p>
+<h2 id="components">Components</h2><p>Tinybind comes with a light web component implementation allowing to create reusable HTML elements.</p>
+<h4>Defining a template</h4><p>A component must de defined as a class descendent of <code>tinybind.Component</code> with a <code>template</code> static property:</p>
+<pre><code class="language-javascript">  class MyComponent extends tinybind.Component {
+    static get template() {
+      return `      
+      &lt;span&gt;{ message }&lt;/span&gt;
+      `
+    }    
+  }</code></pre>
+<p>The template is bound to the element instance, so, in the example above, the value of element &quot;message&quot; property will be displayed and its changes tracked. </p>
+<h4>Tracking attributes</h4><p>To use values passed to the element as attributes, is necessary to define a <code>properties</code> static property that must return a hash where the key is the property that will be used in the template and the value the attribute name or any other non string value.</p>
+<pre><code class="language-javascript">  class MyComponent extends tinybind.Component {
+    static get properties() {
+      return {
+        message: true,
+        iconUrl: &#39;icon&#39;
+      }
+    }
+  }</code></pre>
+<h4>Registering custom element</h4><p>In order to use a component it must be registered once per application:</p>
+<pre><code class="language-javascript">customElements.define(&#39;my-component&#39;, MyComponent)</code></pre>
+<h4>Using</h4><p>Just like any other html element:</p>
+<pre><code class="language-html">&lt;my-component message=&quot;Hello&quot;&gt;&lt;/my-component&gt;</code></pre>
+<blockquote>
+<p>Internet Explorer requires the use of a compiler like babel to transpile the class as well to use the <a href="https://github.com/webcomponents/webcomponentsjs">webcomponents polyfill</a></p>
+</blockquote>
 <h2 id="adapters">Adapters</h2><p>tinybind is agnostic about the objects that it can subscribe to. This makes it very flexible as it can adapt to work with virtually any library or framework, but it also means that you need to tell tinybind <em>how</em> to subscribe to those objects. This is where adapters come in to play. This feature is driven by the observer pattern.</p>
 <p>Each adapter is defined to a unique interface (a single character) which is used to separate the keys in a keypath. The interfaces used in a keypath determine which adapter to use for each intermediary key.</p>
 <pre><code>user.address:city</code></pre><p>The above keypath will use the <code>.</code> adapter to access the <code>address</code> key on the <code>user</code> object, and the <code>:</code> adapter to access the <code>city</code> key on the <code>address</code> object. If you can imagine for a second that <code>address</code> is just a normal property on the user object pointing to a Backbone model, but <code>city</code> is actually an attribute on that Backbone model, you can see how this kind of notation is actually very succint and expressive.</p>
@@ -126,6 +157,8 @@
     obj.set(keypath, value)
   }
 }</code></pre>
+<h2 id="computed-properties">Computed Properties</h2><p>Computed properties are re-evaluated when one or more dependent properties change. Declaring computed properties in Tinybind.js is possible by using buitin <code>watch</code> formatter followed by its dependencies. The following text binding will get re-evaluated when either the event&#39;s <code>start</code> or <code>end</code> attribute changes.</p>
+<pre><code class="language-html">&lt;span rv-text=&quot;dateRange | watch start end&quot;&gt;&lt;/span&gt;</code></pre>
 <h2 id="iteration">Iteration binding</h2><p>Use the <code>rv-each-[item]</code> binder to have tinybind automatically loop over items in an array and append bound instances of that element. Within that element you can bind to the iterated item as well as any contexts that are available in the parent view.</p>
 <pre><code class="language-html">&lt;ul&gt;
   &lt;li rv-each-todo=&quot;list.todos&quot;&gt;
@@ -133,4 +166,4 @@
     &lt;span&gt;{ todo.summary }&lt;/span&gt;
   &lt;/li&gt;
 &lt;ul&gt;</code></pre>
-</article><aside class="col col-md-3 hidden-sm hidden-xs"><div class="pull-right"><nav id="nav" data-spy="affix" data-offset-top="145"><ul class="nav"><li><a href="#install"><strong>Installation</strong></a><ul class="nav"></ul></li><li><a href="#usage"><strong>Usage</strong></a><ul class="nav"><li><a href="#usage-templates">Templates</a></li><li><a href="#usage-binding">Binding</a></li><li><a href="#usage-configuring">Configuring</a></li></ul></li><li><a href="#binders"><strong>Binders</strong></a><ul class="nav"><li><a href="#binders-one-way">One-way binders</a></li><li><a href="#binders-two-way">Two-way binders</a></li><li><a href="#binders-api">API</a></li></ul></li><li><a href="#formatters"><strong>Formatters</strong></a><ul class="nav"><li><a href="#formatters-one-way">One-way formatters</a></li><li><a href="#formatters-two-way">Two-way formatters</a></li><li><a href="#formatters-arguments">Formatter arguments</a></li></ul></li><li><a href="#adapters"><strong>Adapters</strong></a><ul class="nav"><li><a href="#adapters-default">The built-in adapter</a></li><li><a href="#adapters-creating">Creating an adapter</a></li></ul></li><li><a href="#iteration"><strong>Iteration binding</strong></a><ul class="nav"></ul></li></ul></nav></div></aside></div></div></section></body></html>
+</article><aside class="col col-md-3 hidden-sm hidden-xs"><div class="pull-right"><nav id="nav" data-spy="affix" data-offset-top="145"><ul class="nav"><li><a href="#install"><strong>Installation</strong></a><ul class="nav"></ul></li><li><a href="#usage"><strong>Usage</strong></a><ul class="nav"><li><a href="#usage-templates">Templates</a></li><li><a href="#usage-binding">Binding</a></li><li><a href="#usage-configuring">Configuring</a></li></ul></li><li><a href="#binders"><strong>Binders</strong></a><ul class="nav"><li><a href="#binders-one-way">One-way binders</a></li><li><a href="#binders-two-way">Two-way binders</a></li><li><a href="#binders-api">API</a></li></ul></li><li><a href="#formatters"><strong>Formatters</strong></a><ul class="nav"><li><a href="#formatters-one-way">One-way formatters</a></li><li><a href="#formatters-two-way">Two-way formatters</a></li><li><a href="#formatters-arguments">Formatter arguments</a></li><li><a href="#formatters-builtins">Builtins formatters</a></li></ul></li><li><a href="#components"><strong>Components</strong></a><ul class="nav"></ul></li><li><a href="#adapters"><strong>Adapters</strong></a><ul class="nav"><li><a href="#adapters-default">The built-in adapter</a></li><li><a href="#adapters-creating">Creating an adapter</a></li></ul></li><li><a href="#computed-properties"><strong>Computed Properties</strong></a><ul class="nav"></ul></li><li><a href="#iteration"><strong>Iteration binding</strong></a><ul class="nav"></ul></li></ul></nav></div></aside></div></div></section></body></html>
