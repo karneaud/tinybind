@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../dist/tinybind.js"></script>
+
+  <title>Computed</title>
+</head>
+
+<body>
+  <h2>Computed properties</h2>
+  <div id="test">
+    <button rv-on-click="incStart">Inc start</button>
+    <button rv-on-click="incEnd">Inc end</button>
+
+    <span rv-text="dateRange | watch start end"></span>
+  </div>
+
+
+  <script>
+    var model = {
+      start: 1,
+      end: 2,
+      get dateRange() {
+        return 'From ' + this.start + ' to ' + this.end
+      },
+      incStart() {
+        model.start++
+      },
+      incEnd() {
+        model.end++
+      }
+    }
+    tinybind.bind(document.getElementById("test"), model);
+  </script>
+</body>
+
+</html>

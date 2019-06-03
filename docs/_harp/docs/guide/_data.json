@@ -59,6 +59,10 @@
       }
     }
   },
+  "computed-properties": {
+    "title": "Computed Properties",
+    "sections": {}
+  },
   "iteration": {
     "title": "Iteration binding",
     "sections": {}
