@@ -104,19 +104,6 @@ describe('tinybind.Binding', function() {
         binding.set.calledWith('test').should.be.true
       })
     });
-
-    describe.skip('with dependencies', function() {
-      //the computed schema is awkward. Removed for now
-      beforeEach(function() {
-        binding.options.dependencies = ['.fname', '.lname']
-      });
-
-      it('sets up observers on the dependant attributes', function() {
-        binding.bind();
-        adapter.observe.calledWith(model, 'fname', binding).should.be.true;
-        adapter.observe.calledWith(model, 'lname', binding).should.be.true
-      })
-    })
   });
 
   describe('unbind()', function() {

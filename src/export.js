@@ -3,11 +3,13 @@ import View from './view'
 import {OPTIONS, EXTENSIONS} from './constants'
 import adapter from './adapter'
 import binders from './binders'
+import formatters from './formatters'
 import Observer from './observer'
 
 // Returns the public interface.
 
 tinybind.binders = binders
+tinybind.formatters = formatters
 tinybind.adapters['.'] = adapter
 
 // Binds some data to a template / element. Returns a tinybind.View instance.
@@ -47,9 +49,5 @@ tinybind.bind = (el, models, options) => {
   view.bind()
   return view
 }
-
-tinybind.formatters.negate = tinybind.formatters.not = function (value) {
-  return !value;
-};
 
 export default tinybind

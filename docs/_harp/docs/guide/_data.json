@@ -42,6 +42,9 @@
       },
       "arguments": {
         "title": "Formatter arguments"
+      },
+      "builtins": {
+        "title": "Builtins formatters"
       }
     }
   },
