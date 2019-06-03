@@ -5,12 +5,14 @@ import adapter from './adapter'
 import binders from './binders'
 import formatters from './formatters'
 import Observer from './observer'
+import Component from './component'
 
 // Returns the public interface.
 
 tinybind.binders = binders
 tinybind.formatters = formatters
 tinybind.adapters['.'] = adapter
+tinybind.Component = Component
 
 // Binds some data to a template / element. Returns a tinybind.View instance.
 tinybind.bind = (el, models, options) => {

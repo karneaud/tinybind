@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../dist/tinybind.js"></script>
+  <title>Tinybind Component</title>
+</head>
+
+<body>
+
+  <my-app></my-app>
+
+
+  <script>
+    class App extends tinybind.Component {
+      static get template() {
+        return `
+        <h1>Tiny application</h1>
+        <input rv-value="model.name"/>          
+        <my-message rv-message="model.name"></my-message>
+        `
+      }
+
+      constructor() {
+        super()
+        this.model = {
+          name: "Luiz"
+        }
+      }
+    }
+
+    class Message extends tinybind.Component {
+      static get template() {
+        return `
+        <div>Hello {message}</div>
+        `
+      }
+
+      static get properties() {
+        return {
+          message: true
+        }
+      }
+
+    }
+
+    customElements.define('my-app', App);
+    customElements.define('my-message', Message);
+  </script>
+</body>
+
+</html>
