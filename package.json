@@ -2,7 +2,7 @@
   "name": "tinybind",
   "description": "Declarative data binding + templating solution.",
   "version": "0.11.0",
-  "author": "Luiz Américo Pereira Câmara",  
+  "author": "Luiz Américo Pereira Câmara",
   "url": "https://github.com/blikblum/tinybind",
   "main": "./dist/tinybind.js",
   "licenses": [
@@ -23,9 +23,9 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "mocha": "^3.0.2",
-    "mocha-phantomjs-core": "^1.3.1",
-    "phantomjs-prebuilt": "^2.1.12",
+    "mocha": "^6.1.4",
+    "mocha-phantomjs-core": "^2.1.2",
+    "phantomjs-prebuilt": "^2.1.16",
     "rollup": "^1.13.1",
     "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-uglify": "^6.0.2",
