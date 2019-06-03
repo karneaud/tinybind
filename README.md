@@ -45,10 +45,10 @@ Documentation is available on the [homepage](http://blikblum.github.io/tinybind/
 ## Differences from Rivets.js
 
 * Public interface
-  * Remove component feature -> incomplete, untested code. Use web components libraries like SkateJs or LitElement
-  * Add not/negate formatter
-  * Remove unless and unchecked binders in favor of combining not/negate formatters with if/checked binders
-  * Remove computed feature - can be replaced by an identity formatter
+  * Uses [web components specs](https://developer.mozilla.org/en-US/docs/Web/Web_Components) instead of custom implementation
+  * Implement computed feature using `watch` formatter instead of a specific syntax
+  * Add not/negate builtin formatters
+  * Remove unless and unchecked binders in favor of combining not/negate formatters with if/checked binders  
   * Add ability to customize input event through event-name attribute
 * Internal changes
   * Written in ES6 instead of coffeescript
