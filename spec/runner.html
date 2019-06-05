@@ -1,40 +1,41 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mocha Test Runner</title>
-    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
-  </head>
 
-  <body>
-    <div id="mocha"></div>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mocha Test Runner</title>
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+</head>
 
-    <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/should/should.js"></script>
-    <script src="../node_modules/sinon/pkg/sinon.js"></script>
-    <script src="../dist/tinybind.js"></script>
-    <script>
-      window.tinybind = tinybind
-    </script>
+<body>
+  <div id="mocha"></div>
 
-    <script>mocha.setup('bdd')</script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/should/should.js"></script>
+  <script src="../node_modules/sinon/pkg/sinon.js"></script>
+  <script src="../dist/tinybind.js"></script>
+  <script>
+    window.tinybind = tinybind
+  </script>
 
-    <script src="lib/mock.data.js"></script>
-    <script src="tinybind/binders.js"></script>
-    <script src="tinybind/binding.js"></script>
-    <script src="tinybind/functional.js"></script>
-    <script src="tinybind/routines.js"></script>
-    <script src="tinybind/formatters.js"></script>
-    <script src="tinybind/text_template_parser.js"></script>
+  <script>mocha.setup('bdd')</script>
 
-    <script>
-      if (window.mochaPhantomJS) {
-        mochaPhantomJS.run();
-      } else {
-        mocha.run();
-      }
-    </script>
-  </body>
+  <script src="lib/mock.data.js"></script>
+  <script src="tinybind/binders.js"></script>
+  <script src="tinybind/binding.js"></script>
+  <script src="tinybind/functional.js"></script>
+  <script src="tinybind/routines.js"></script>
+  <script src="tinybind/formatters.js"></script>
+  <script src="tinybind/text_template_parser.js"></script>
+
+  <script>
+    var isHeadless = /Headless/.test(navigator.userAgent)
+    mocha.reporter(isHeadless ? 'spec' : 'html').run(() => {
+      window._mochaDone = true
+    });
+  </script>
+</body>
+
 </html>

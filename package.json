@@ -17,7 +17,7 @@
   },
   "scripts": {
     "pretest": "node tools/build.js --development",
-    "test": "phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js spec/runner.html",
+    "test": "node tools/test",
     "build": "node tools/build",
     "prepublishOnly": "npm run build"
   },
@@ -25,8 +25,7 @@
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "mocha": "^6.1.4",
-    "mocha-phantomjs-core": "^2.1.2",
-    "phantomjs-prebuilt": "^2.1.16",
+    "puppeteer": "^1.17.0",
     "rollup": "^1.13.1",
     "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-uglify": "^6.0.2",
