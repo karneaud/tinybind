@@ -287,4 +287,120 @@ describe('Functional', function() {
       data.get('foo').should.equal('some new value');
     })
   })
+
+  describe('Checkbox inputs',function(){
+    let multipleCheckboxesInputs = [document.createElement('input'), document.createElement('input')], radioData = { choices: [{value:'Check box 1',checked: true },{value:'Check box 2',checked:false },{value:'Check box 3',checked: true }] }
+   
+    before(function(){
+      multipleCheckboxesInputs.forEach(function(element, index){
+        element.type = 'checkbox'
+        element.setAttribute('rv-value', 'choices.'+ index +'.value')
+        element.setAttribute('rv-checked', 'choices.' + index + '.checked' )
+        tinybind.bind(element, radioData)
+      })
+   })
+
+   it('should have checkbox 1', function(){
+      multipleCheckboxesInputs[0].value.should.equal(radioData.choices[0].value)
+   })
+
+   it('should equal true', function(){
+      multipleCheckboxesInputs[0].checked.should.equal(true)
+      multipleCheckboxesInputs[1].checked.should.equal(false)
+   })
+
+
+  })
+
+  describe('Radio buttons', function(done){
+    this.timeout(2000)
+    let multipleRadioInputs = [document.createElement('input'), document.createElement('input')], radioData = { choice: 'Radio 1', values:['Radio 1', 'Radio 2'], choose: function(e){
+        radioData.choice = e.target.value
+     }}
+     before(function(){
+        multipleRadioInputs.forEach(function(element, index){
+          element.name = 'radio-test'
+          element.type = 'radio'
+          element.setAttribute('rv-checked', 'choice')
+          element.setAttribute('rv-value', 'values.'+index)
+          element.setAttribute("rv-on-click","choose")
+          tinybind.bind(element, radioData)
+        })
+     })
+
+     it('should have Radio 1', function(){
+        multipleRadioInputs[0].value.should.equal(radioData.choice)
+     })
+
+     it('should equal true', function(){
+        multipleRadioInputs[0].checked.should.equal(true)
+        multipleRadioInputs[1].checked.should.equal(false)
+     })
+
+     it('will change to false', function(done){
+        multipleRadioInputs[1].click()
+        setTimeout(function(){
+          try {
+           
+          multipleRadioInputs[0].checked.should.equal(false)
+          multipleRadioInputs[1].checked.should.equal(true)
+          radioData.choice.should.equal('Radio 2')
+          done() 
+          } catch (error) {
+            done(error)
+          }
+        }, 1990)
+     })
+
+     it('should result to false',function(){
+        radioData.choice.should.equal('Radio 2')
+        multipleRadioInputs[0].checked.should.equal(false)
+        multipleRadioInputs[1].checked.should.equal(true)
+        radioData.choose({target: { value: 'Radio 1'}})
+        multipleRadioInputs[0].checked.should.equal(true)
+        multipleRadioInputs[1].checked.should.equal(false)
+     })
+  })
+
+  describe('Iterated checkbox', function(done){
+    this.timeout(2000)
+    let checkboxInput = document.createElement('input'), radioData = { choices: [{value:'Check box 1',checked: true },{value:'Check box 2',checked:false },{value:'Check box 3',checked: true }] }, div = document.createElement('div'), checkboxes 
+    
+    before(function(){
+      checkboxInput.type = 'checkbox'
+      checkboxInput.setAttribute('rv-value', 'item.value')
+      checkboxInput.setAttribute('rv-checked', 'item.checked' )
+      div.setAttribute('rv-each-item','choices')
+      div.appendChild(checkboxInput)
+      document.body.appendChild(div)
+      tinybind.bind(div, radioData)
+      checkboxes = document.querySelectorAll('div > input[type=checkbox]')
+   })
+
+   it('should have value of Checkbox 1 and checked', function(){
+      checkboxes[0].value.should.equal(radioData.choices[0].value)
+      checkboxes[0].checked.should.equal(true)
+   })
+
+   it('should have value of Checkbox 2 and unchecked', function(){
+    checkboxes[1].value.should.equal(radioData.choices[1].value)
+    checkboxes[1].checked.should.equal(false)
+  })
+
+  it('should be checked with a value of Checkbox 2 when checked', function(done){
+    let error = '';
+    checkboxes[1].click() 
+    setTimeout(function(){
+      try {
+        checkboxes[1].value.should.equal(radioData.choices[1].value)
+        checkboxes[1].checked.should.equal(true) 
+
+        done()
+      } catch (error) {
+        done(error)
+      }
+    },1990)
+  })
+
+  })
 });
