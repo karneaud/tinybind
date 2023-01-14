@@ -1,4 +1,4 @@
 image:
   file: Dockerfile
 tasks:
-  - init: yarn install && yarn build
+  - init: npm install && npm run build
