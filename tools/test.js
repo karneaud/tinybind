@@ -6,7 +6,7 @@ async function runMochaPage (fileName) {
   const page = await browser.newPage();
   page.on('console', msg => {
     const args = msg.args().map(handle => {
-      return handle._remoteObject.value
+      return handle.remoteObject().value
     })
     console.log.apply(console, args);
   });
