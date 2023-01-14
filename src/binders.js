@@ -229,7 +229,7 @@ const binders = {
     priority: 3000,
 
     bind: function(el) {
-      this.isRadio = el.tagName === 'INPUT' && el.type === 'radio';
+      this.isRadio = el.tagName === 'INPUT' && (el.type === 'radio' || el.type === 'checkbox');
       if (!this.isRadio) {
         this.event = el.getAttribute('event-name') || (el.tagName === 'SELECT' ? 'change' : 'input')
 
