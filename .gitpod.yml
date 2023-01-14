@@ -1,0 +1,4 @@
+image:
+  file: Dockerfile
+tasks:
+  - init: yarn install && yarn build
